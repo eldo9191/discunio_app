@@ -1,7 +1,7 @@
-import 'package:discunio/features/uebungen/logic/uebungen_provider.dart';
+import 'package:discunio/features/uebungen/logic/exercise_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'features/uebungen/presentation/screens/uebungen_screen.dart';
+import 'features/uebungen/presentation/screens/exercises_screen.dart';
 
 void main() {
   runApp(const DiscunioApp());
@@ -13,14 +13,14 @@ class DiscunioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => UebungenProvider(),
+      create: (_) => ExerciseProvider(),
       child: MaterialApp(
         title: 'Discunio',
         theme: ThemeData(
           useMaterial3: true,
           colorSchemeSeed: Colors.indigo,
         ),
-        home: const UebungenScreen(),
+        home: const ExercisesScreen(),
       ),
     );
   }

@@ -1,51 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../data/models/uebung.dart';
-import '../../logic/uebungen_provider.dart';
+import '../../data/models/exercise.dart';
+import '../../logic/exercise_provider.dart';
 
-class UebungEditScreen extends StatefulWidget {
-  final Uebung uebung;
+class ExerciseEditScreen extends StatefulWidget {
+  final Exercise exercise;
 
-  const UebungEditScreen({super.key, required this.uebung});
+  const ExerciseEditScreen({super.key, required this.exercise});
 
   @override
-  State<UebungEditScreen> createState() => _UebungEditScreenState();
+  State<ExerciseEditScreen> createState() => _ExerciseEditScreenState();
 }
 
-class _UebungEditScreenState extends State<UebungEditScreen> {
+class _ExerciseEditScreenState extends State<ExerciseEditScreen> {
   late TextEditingController nameController;
-  late TextEditingController beschreibungController;
-  late TextEditingController gewichtController;
-  late Muskelgruppe muskel;
+  late TextEditingController descriptionController;
+  late TextEditingController weightController;
+  late MuscleGroup muscleGroup;
 
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController(text: widget.uebung.name);
-    beschreibungController = TextEditingController(text: widget.uebung.beschreibung);
-    gewichtController = TextEditingController(text: widget.uebung.gewicht.toString());
-    muskel = widget.uebung.muskel;
+    nameController = TextEditingController(text: widget.exercise.name);
+    descriptionController = TextEditingController(text: widget.exercise.description);
+    weightController = TextEditingController(text: widget.exercise.weight.toString());
+    muscleGroup = widget.exercise.muscleGroup;
   }
 
   @override
   void dispose() {
     nameController.dispose();
-    beschreibungController.dispose();
-    gewichtController.dispose();
+    descriptionController.dispose();
+    weightController.dispose();
     super.dispose();
   }
 
   void _save() {
-    final updated = Uebung(
+    final updated = Exercise(
       name: nameController.text.trim(),
-      beschreibung: beschreibungController.text.trim(),
-      gewicht: double.tryParse(gewichtController.text.replaceAll(',', '.')) ?? widget.uebung.gewicht,
-      muskel: muskel
+      description: descriptionController.text.trim(),
+      weight: double.tryParse(weightController.text.replaceAll(',', '.')) ?? widget.exercise.weight,
+      muscleGroup: muscleGroup
     );
 
-    final provider = Provider.of<UebungenProvider>(context, listen: false);
-    provider.removeUebung(widget.uebung);
-    provider.addUebung(updated);
+    final provider = Provider.of<ExerciseProvider>(context, listen: false);
+    provider.removeExercise(widget.exercise);
+    provider.addExercise(updated);
 
     Navigator.pop(context);
   }
@@ -64,22 +64,22 @@ class _UebungEditScreenState extends State<UebungEditScreen> {
             ),
             const SizedBox(height: 12),
             TextField(
-              controller: beschreibungController,
+              controller: descriptionController,
               decoration: const InputDecoration(labelText: 'Beschreibung'),
             ),
             const SizedBox(height: 12),
             TextField(
-              controller: gewichtController,
+              controller: weightController,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'Gewicht (kg)'),
             ),
             const SizedBox(height: 12),
-            DropdownButtonFormField<Muskelgruppe>(
-              value: muskel,
+            DropdownButtonFormField<MuscleGroup>(
+              value: muscleGroup,
               onChanged: (value) => setState(() {
-                if (value != null) muskel = value;
+                if (value != null) muscleGroup = value;
               }),
-              items: Muskelgruppe.values
+              items: MuscleGroup.values
                   .map((g) => DropdownMenuItem(
                         value: g,
                         child: Text(g.name),

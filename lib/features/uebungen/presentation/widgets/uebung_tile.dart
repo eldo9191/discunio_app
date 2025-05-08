@@ -1,34 +1,34 @@
-import 'package:discunio/features/uebungen/presentation/screens/uebung_edit_screen.dart';
+import 'package:discunio/features/uebungen/presentation/screens/exercise_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../data/models/uebung.dart';
-import '../../logic/uebungen_provider.dart';
+import '../../data/models/exercise.dart';
+import '../../logic/exercise_provider.dart';
 
-class UebungTile extends StatefulWidget {
-  final Uebung uebung;
+class ExerciseTile extends StatefulWidget {
+  final Exercise exercise;
 
-  const UebungTile({super.key, required this.uebung});
+  const ExerciseTile({super.key, required this.exercise});
 
   @override
-  State<UebungTile> createState() => _UebungTileState();
+  State<ExerciseTile> createState() => _ExerciseTileState();
 }
 
-class _UebungTileState extends State<UebungTile> {
+class _ExerciseTileState extends State<ExerciseTile> {
   late TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text: widget.uebung.gewicht.toStringAsFixed(1)
+      text: widget.exercise.weight.toStringAsFixed(1)
     );
   }
 
   @override
-  void didUpdateWidget(UebungTile oldWidget) {
+  void didUpdateWidget(ExerciseTile oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.uebung.gewicht != widget.uebung.gewicht) {
-      _controller.text = widget.uebung.gewicht.toStringAsFixed(1);
+    if (oldWidget.exercise.weight != widget.exercise.weight) {
+      _controller.text = widget.exercise.weight.toStringAsFixed(1);
     }
   }
 
@@ -39,26 +39,26 @@ class _UebungTileState extends State<UebungTile> {
   }
   
   void _updateGewichtFromText(BuildContext context) {
-    final provider = Provider.of<UebungenProvider>(context, listen: false);
+    final provider = Provider.of<ExerciseProvider>(context, listen: false);
     final parsed = double.tryParse(_controller.text.replaceAll(',', '.'));
 
     if (parsed != null && parsed >= 0) {
-      provider.changeGewicht(widget.uebung, parsed - widget.uebung.gewicht);
+      provider.changeExercise(widget.exercise, parsed - widget.exercise.weight);
     } else {
-      _controller.text = widget.uebung.gewicht.toStringAsFixed(1); // Rücksetzen bei ungültiger Eingabe
+      _controller.text = widget.exercise.weight.toStringAsFixed(1); // Rücksetzen bei ungültiger Eingabe
     }
   }
 
   @override
   Widget build(BuildContext context) {
-   final provider = Provider.of<UebungenProvider>(context, listen: false);
+   final provider = Provider.of<ExerciseProvider>(context, listen: false);
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: InkWell(
         onTap: () {
           Navigator.push(context,
-            MaterialPageRoute(builder: (_) => UebungEditScreen(uebung: widget.uebung)
+            MaterialPageRoute(builder: (_) => ExerciseEditScreen(exercise: widget.exercise)
             ),
           );
         },
@@ -68,13 +68,13 @@ class _UebungTileState extends State<UebungTile> {
           children: [
             Expanded(
               child: Text(
-                widget.uebung.name,
+                widget.exercise.name,
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
             ),
             IconButton(
               icon: const Icon(Icons.remove),
-              onPressed: () => provider.changeGewicht(widget.uebung, -2.5),
+              onPressed: () => provider.changeExercise(widget.exercise, -2.5),
             ),
             SizedBox(
               width: 70,
@@ -93,12 +93,12 @@ class _UebungTileState extends State<UebungTile> {
             ),
             IconButton(
               icon: const Icon(Icons.add),
-              onPressed: () => provider.changeGewicht(widget.uebung, 2.5),
+              onPressed: () => provider.changeExercise(widget.exercise, 2.5),
             ),
             IconButton(
               icon: const Icon(Icons.delete),
               color: Colors.red,
-              onPressed: () => provider.removeUebung(widget.uebung),
+              onPressed: () => provider.removeExercise(widget.exercise),
             ),
           ],
           )
