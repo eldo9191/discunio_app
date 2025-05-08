@@ -1,4 +1,4 @@
-import 'package:discunio/features/uebungen/presentation/screens/exercise_edit_screen.dart';
+import 'package:discunio/features/exercises/presentation/screens/exercise_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../data/models/exercise.dart';
@@ -43,7 +43,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
     final parsed = double.tryParse(_controller.text.replaceAll(',', '.'));
 
     if (parsed != null && parsed >= 0) {
-      provider.changeExercise(widget.exercise, parsed - widget.exercise.weight);
+      provider.changeWeight(widget.exercise, parsed - widget.exercise.weight);
     } else {
       _controller.text = widget.exercise.weight.toStringAsFixed(1); // Rücksetzen bei ungültiger Eingabe
     }
@@ -74,7 +74,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
             ),
             IconButton(
               icon: const Icon(Icons.remove),
-              onPressed: () => provider.changeExercise(widget.exercise, -2.5),
+              onPressed: () => provider.changeWeight(widget.exercise, -2.5),
             ),
             SizedBox(
               width: 70,
@@ -93,7 +93,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
             ),
             IconButton(
               icon: const Icon(Icons.add),
-              onPressed: () => provider.changeExercise(widget.exercise, 2.5),
+              onPressed: () => provider.changeWeight(widget.exercise, 2.5),
             ),
             IconButton(
               icon: const Icon(Icons.delete),

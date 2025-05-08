@@ -1,7 +1,7 @@
-import 'package:discunio/features/uebungen/logic/exercise_provider.dart';
+import 'package:discunio/features/exercises/logic/exercise_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'features/uebungen/presentation/screens/exercises_screen.dart';
+import 'features/exercises/presentation/screens/exercises_screen.dart';
 
 void main() {
   runApp(const DiscunioApp());

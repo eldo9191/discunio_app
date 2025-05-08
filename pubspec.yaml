@@ -9,6 +9,8 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.1.1
+  sqflite: ^2.3.2
+  path: ^1.9.0
 
   # Optional: Für besseres Material 3 Design (nicht zwingend nötig, aber empfohlen)
   flutter_material_symbols: ^0.0.4
