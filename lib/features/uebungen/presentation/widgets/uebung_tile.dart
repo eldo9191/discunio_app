@@ -1,3 +1,4 @@
+import 'package:discunio/features/uebungen/presentation/screens/uebung_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../data/models/uebung.dart';
@@ -54,7 +55,14 @@ class _UebungTileState extends State<UebungTile> {
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      child: Padding(
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (_) => UebungEditScreen(uebung: widget.uebung)
+            ),
+          );
+        },
+        child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         child: Row(
           children: [
@@ -94,7 +102,10 @@ class _UebungTileState extends State<UebungTile> {
             ),
           ],
           )
-        )
+        ),
+      )
+      
+        
     );
   }
 }
