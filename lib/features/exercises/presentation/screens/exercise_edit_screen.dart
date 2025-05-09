@@ -36,7 +36,7 @@ class _ExerciseEditScreenState extends State<ExerciseEditScreen> {
   }
 
   void _save() {
-    final updated = Exercise(
+    final updatedExercise = Exercise(
       name: nameController.text.trim(),
       description: descriptionController.text.trim(),
       weight: double.tryParse(weightController.text.replaceAll(',', '.')) ?? widget.exercise.weight,
@@ -44,8 +44,7 @@ class _ExerciseEditScreenState extends State<ExerciseEditScreen> {
     );
 
     final provider = Provider.of<ExerciseProvider>(context, listen: false);
-    provider.removeExercise(widget.exercise);
-    provider.addExercise(updated);
+    provider.updateExercise(widget.exercise, updatedExercise);
 
     Navigator.pop(context);
   }

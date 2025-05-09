@@ -23,8 +23,9 @@ class ExerciseProvider with ChangeNotifier {
   Future<void> addExercise(Exercise exercise) async {
     
     try {
+      int id = await _db.insertExercise(exercise);
+      exercise.id = id;
       _exercises.add(exercise);
-      await _db.insertExercise(exercise);
       notifyListeners();
     } catch (e, stack) {
       debugPrint('[addExercise] Fehler: $e');
@@ -40,8 +41,8 @@ class ExerciseProvider with ChangeNotifier {
   }
 
   Future<void> updateExercise(Exercise old, Exercise newExercise) async {
-    final index = _exercises.indexWhere((e) => e.name == old.name);
-
+    final index = _exercises.indexWhere((e) => e.id == old.id);
+    newExercise.id = old.id;
     if (index != -1) {
       _exercises[index] = newExercise;
       await _db.updateExercise(newExercise);
@@ -50,7 +51,7 @@ class ExerciseProvider with ChangeNotifier {
   }
 
   Future<void> changeWeight(Exercise exercise, double delta) async {
-    final index = _exercises.indexWhere((e) => e.name == exercise.name);
+    final index = _exercises.indexWhere((e) => e.id == exercise.id);
     if (index == -1) {
       return;
     }
@@ -61,6 +62,7 @@ class ExerciseProvider with ChangeNotifier {
       weight: (exercise.weight + delta).clamp(0.0, 999.0),
       muscleGroup: exercise.muscleGroup
     );
+    newExercise.id = exercise.id;
 
     _exercises[index] = newExercise;
     await _db.updateExercise(newExercise);

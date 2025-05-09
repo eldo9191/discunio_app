@@ -9,6 +9,7 @@ enum MuscleGroup {
 }
 
 class Exercise {
+ int? id;
  final String name;
  final String description;
  final double weight;
@@ -23,6 +24,7 @@ class Exercise {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'description': description,
       'weight': weight,
@@ -34,7 +36,7 @@ class Exercise {
     return Exercise(
       name: map['name'],
       description: map['description'],
-      weight: map['weightweight'],
+      weight: map['weight'],
       muscleGroup: MuscleGroup.values.firstWhere((g) => g.name == map['muscleGroup']),
     );
   }

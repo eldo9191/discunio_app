@@ -39,14 +39,18 @@ class ExerciseDbService {
     );
   }
 
-  Future<void> insertExercise(Exercise e) async {
+  Future<int> insertExercise(Exercise e) async {
     final dbClient = await db;
-    await dbClient.insert('exercises', e.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    return await dbClient.insert('exercises', e.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<void> deleteExercise(Exercise e) async {
     final dbClient = await db;
-    await dbClient.delete('exercises', where: 'name = ?', whereArgs: [e.name]);
+    await dbClient.delete(
+      'exercises',
+      where: 'id = ?',
+      whereArgs: [e.id]
+    );
   }
 
   Future<void> updateExercise(Exercise e) async {
@@ -54,8 +58,8 @@ class ExerciseDbService {
     await dbClient.update(
       'exercises',
       e.toMap(),
-      where: "name = ?",
-      whereArgs: [e.name]
+      where: "id = ?",
+      whereArgs: [e.id]
     );
   }
 
