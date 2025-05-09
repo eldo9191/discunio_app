@@ -68,7 +68,7 @@ class _ExerciseTileState extends State<ExerciseTile> {
           children: [
             Expanded(
               child: Text(
-                widget.exercise.name,
+                widget.exercise.name + widget.exercise.id.toString(),
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
             ),

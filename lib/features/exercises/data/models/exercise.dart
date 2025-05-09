@@ -33,11 +33,13 @@ class Exercise {
   }
 
   factory Exercise.fromMap(Map<String, dynamic> map) {
-    return Exercise(
+    final exercise =  Exercise(
       name: map['name'],
       description: map['description'],
       weight: map['weight'],
       muscleGroup: MuscleGroup.values.firstWhere((g) => g.name == map['muscleGroup']),
     );
+    exercise.id = map['id'];
+    return exercise;
   }
 }
