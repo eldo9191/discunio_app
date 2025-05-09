@@ -1,4 +1,4 @@
-import 'package:discunio/features/exercises/data/models/exercise.dart';
+import 'package:discunio/features/exercises/presentation/widgets/add_exercise_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../logic/exercise_provider.dart';
@@ -24,14 +24,11 @@ class ExercisesScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newExercise = Exercise(
-            name: 'Bankdrücken',
-            description: 'Brustübung',
-            weight: 20.0,
-            muscleGroup: MuscleGroup.breast,
-          );
-          await Provider.of<ExerciseProvider>(context, listen: false).addExercise(newExercise);
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => const AddExerciseDialog()
+          );  
         },
         child: const Icon(Icons.add)
       )
